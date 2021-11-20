@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-11-19 21:17:10</td>
+            <td class="headerValue">2021-11-20 21:17:15</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -73,15 +73,15 @@
 <span class="lineNum">      11 </span>            : Errors are written to 'stderr', expect for 'API rate limit exceeded', as 
 <span class="lineNum">      12 </span>            : the output would typically occur in the middle of recursive calls.
 <span class="lineNum">      13 </span>            : &quot;&quot;&quot;
-<span class="lineNum">      14 </span><span class="lineCov">         93 : function spotify_request(url_ext::String, method::String= &quot;GET&quot;; scope = &quot;client-credentials&quot;)</span>
+<span class="lineNum">      14 </span><span class="lineCov">         99 : function spotify_request(url_ext::String, method::String= &quot;GET&quot;; scope = &quot;client-credentials&quot;)</span>
 <span class="lineNum">      15 </span>            :     # Not so cool, but this is how we get rid of spaces in vectors of strings:
-<span class="lineNum">      16 </span><span class="lineCov">        279 :     url_ext = replace(url_ext, ' ' =&gt; &quot;&quot;)</span>
-<span class="lineNum">      17 </span><span class="lineCov">         93 :     url = &quot;https://api.spotify.com/v1/$url_ext&quot;</span>
-<span class="lineNum">      18 </span><span class="lineCov">         93 :     headers = header_maker(;scope)</span>
-<span class="lineNum">      19 </span><span class="lineCov">        185 :     isnothing(headers) &amp;&amp; return()</span>
-<span class="lineNum">      20 </span><span class="lineCov">         92 :     resp = HTTP.Messages.Response()</span>
-<span class="lineNum">      21 </span><span class="lineCov">         92 :     try</span>
-<span class="lineNum">      22 </span><span class="lineCov">        184 :         resp = HTTP.request(method, url, headers)</span>
+<span class="lineNum">      16 </span><span class="lineCov">        297 :     url_ext = replace(url_ext, ' ' =&gt; &quot;&quot;)</span>
+<span class="lineNum">      17 </span><span class="lineCov">         99 :     url = &quot;https://api.spotify.com/v1/$url_ext&quot;</span>
+<span class="lineNum">      18 </span><span class="lineCov">         99 :     headers = header_maker(;scope)</span>
+<span class="lineNum">      19 </span><span class="lineCov">        197 :     isnothing(headers) &amp;&amp; return()</span>
+<span class="lineNum">      20 </span><span class="lineCov">         98 :     resp = HTTP.Messages.Response()</span>
+<span class="lineNum">      21 </span><span class="lineCov">         98 :     try</span>
+<span class="lineNum">      22 </span><span class="lineCov">        196 :         resp = HTTP.request(method, url, headers)</span>
 <span class="lineNum">      23 </span>            :     catch e
 <span class="lineNum">      24 </span><span class="lineCov">          5 :         if  e isa HTTP.ExceptionRequest.StatusError &amp;&amp; e.status ∈ [400, 401, 403, 404, 429]</span>
 <span class="lineNum">      25 </span><span class="lineCov">          2 :             response_body = e.response.body |&gt; String</span>
@@ -113,8 +113,8 @@
 <span class="lineNum">      51 </span><span class="lineNoCov">          0 :             return JSON3.Object(), 0</span>
 <span class="lineNum">      52 </span>            :         end
 <span class="lineNum">      53 </span>            :     end
-<span class="lineNum">      54 </span><span class="lineCov">         90 :     response_body = resp.body |&gt; String</span>
-<span class="lineNum">      55 </span><span class="lineCov">         90 :     response_body |&gt; JSON3.read , 0</span>
+<span class="lineNum">      54 </span><span class="lineCov">         96 :     response_body = resp.body |&gt; String</span>
+<span class="lineNum">      55 </span><span class="lineCov">         96 :     response_body |&gt; JSON3.read , 0</span>
 <span class="lineNum">      56 </span>            : end
 <span class="lineNum">      57 </span>            : 
 <span class="lineNum">      58 </span>            : #=

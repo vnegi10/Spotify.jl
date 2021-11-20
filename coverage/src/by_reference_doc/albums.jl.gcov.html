@@ -31,13 +31,13 @@
             <td class="headerValue">on branch master</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">2</td>
-            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">5</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-11-19 21:17:10</td>
+            <td class="headerValue">2021-11-20 21:17:15</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -63,7 +63,7 @@
 <a name="1"><span class="lineNum">       1 </span>            : ## https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-album</a>
 <span class="lineNum">       2 </span>            : 
 <span class="lineNum">       3 </span>            : &quot;&quot;&quot;
-<span class="lineNum">       4 </span>            :     album_get(album_id; market=&quot;US&quot;)
+<span class="lineNum">       4 </span>            :     album_get_single(album_id; market=&quot;US&quot;)
 <span class="lineNum">       5 </span>            : 
 <span class="lineNum">       6 </span>            : **Summary**: Get Spotify catalog information for a single album.
 <span class="lineNum">       7 </span>            : 
@@ -75,7 +75,7 @@
 <span class="lineNum">      13 </span>            : 
 <span class="lineNum">      14 </span>            : # Example
 <span class="lineNum">      15 </span>            : ```julia-repl
-<span class="lineNum">      16 </span>            : julia&gt; Spotify.album_get(&quot;5XgEM5g3xWEwL4Zr6UjoLo&quot;)[1]
+<span class="lineNum">      16 </span>            : julia&gt; Spotify.album_get_single(&quot;5XgEM5g3xWEwL4Zr6UjoLo&quot;)[1]
 <span class="lineNum">      17 </span>            : JSON3.Object{Base.CodeUnits{UInt8, String}, Vector{UInt64}} with 18 entries:
 <span class="lineNum">      18 </span>            :   :album_type             =&gt; &quot;album&quot;
 <span class="lineNum">      19 </span>            :   :artists                =&gt; JSON3.Object[{…
@@ -85,7 +85,7 @@
 <span class="lineNum">      23 </span>            :   :genres                 =&gt; Union{}[]
 <span class="lineNum">      24 </span>            : ```
 <span class="lineNum">      25 </span>            : &quot;&quot;&quot;
-<span class="lineNum">      26 </span>            : function album_get(album_id; market=&quot;US&quot;)
+<span class="lineNum">      26 </span>            : function album_get_single(album_id; market=&quot;US&quot;)
 <span class="lineNum">      27 </span><span class="lineCov">          6 :     return spotify_request(&quot;albums/$album_id?market=$market&quot;) </span>
 <span class="lineNum">      28 </span>            : end
 <span class="lineNum">      29 </span>            : 
@@ -119,6 +119,87 @@
 <span class="lineNum">      57 </span>            : function album_get_tracks(album_id; limit=20, offset=0, market=&quot;US&quot;)
 <span class="lineNum">      58 </span><span class="lineCov">         10 :     return spotify_request(&quot;albums/$album_id/tracks?limit=$limit&amp;offset=$offset&amp;market=$market&quot;)</span>
 <span class="lineNum">      59 </span>            : end
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            : 
+<span class="lineNum">      62 </span>            : ## https://developer.spotify.com/documentation/web-api/reference/#/operations/get-multiple-albums
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            : &quot;&quot;&quot;
+<span class="lineNum">      65 </span>            :     album_get_multiple(album_ids; market=&quot;US&quot;)
+<span class="lineNum">      66 </span>            : 
+<span class="lineNum">      67 </span>            : **Summary**: Get Spotify catalog information for multiple albums identified by their Spotify IDs.    
+<span class="lineNum">      68 </span>            : 
+<span class="lineNum">      69 </span>            : # Arguments
+<span class="lineNum">      70 </span>            : `album_ids` : A comma-separated list of the Spotify IDs for the albums. Maximum: 20 IDs.
+<span class="lineNum">      71 </span>            : 
+<span class="lineNum">      72 </span>            : # Optional keywords
+<span class="lineNum">      73 </span>            : `market` : An ISO 3166-1 alpha-2 country code. Default is set to &quot;US&quot;.
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span>            : # Example
+<span class="lineNum">      76 </span>            : ```julia-repl
+<span class="lineNum">      77 </span>            : julia&gt; Spotify.album_get_multiple(&quot;5XgEM5g3xWEwL4Zr6UjoLo, 2rpT0freJsmUmmPluVWqg5&quot;)[1]
+<span class="lineNum">      78 </span>            : JSON3.Object{Base.CodeUnits{UInt8, String}, Vector{UInt64}} with 1 entry:
+<span class="lineNum">      79 </span>            :   :albums =&gt; JSON3.Object[{…
+<span class="lineNum">      80 </span>            : ```
+<span class="lineNum">      81 </span>            : &quot;&quot;&quot;
+<span class="lineNum">      82 </span>            : function album_get_multiple(album_ids; market=&quot;US&quot;)
+<span class="lineNum">      83 </span><span class="lineCov">          6 :     return spotify_request(&quot;albums?ids=$album_ids&amp;market=$market&quot;)</span>
+<span class="lineNum">      84 </span>            : end
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            : 
+<span class="lineNum">      87 </span>            : ## https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-saved-albums
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span>            : &quot;&quot;&quot;
+<span class="lineNum">      90 </span>            :     album_get_saved(;limit::Int64=20, market::String=&quot;US&quot;, offset::Int64=0)
+<span class="lineNum">      91 </span>            : 
+<span class="lineNum">      92 </span>            : **Summary**: Get a list of the albums saved in the current Spotify user's 'Your Music' library.
+<span class="lineNum">      93 </span>            : 
+<span class="lineNum">      94 </span>            : # Optional keywords
+<span class="lineNum">      95 </span>            : - `limit::Int64` : Maximum number of items to return, default is set to 20
+<span class="lineNum">      96 </span>            : - `market::String` : An ISO 3166-1 alpha-2 country code. If a country code is specified, 
+<span class="lineNum">      97 </span>            :                      only episodes that are available in that market will be returned. 
+<span class="lineNum">      98 </span>            :                      Default is set to &quot;US&quot;.
+<span class="lineNum">      99 </span>            : - `offset::Int64` : Index of the first item to return, default is set to 0
+<span class="lineNum">     100 </span>            : 
+<span class="lineNum">     101 </span>            : # Example
+<span class="lineNum">     102 </span>            : ```julia-repl
+<span class="lineNum">     103 </span>            : julia&gt; Spotify.album_get_saved()[1]
+<span class="lineNum">     104 </span>            : [ Info: We try the request without checking if current grant includes scope user-library-read.
+<span class="lineNum">     105 </span>            : JSON3.Object{Base.CodeUnits{UInt8, String}, Vector{UInt64}} with 7 entries:
+<span class="lineNum">     106 </span>            :   :href     =&gt; &quot;https://api.spotify.com/v1/me/albums?offset=0&amp;limit=20&amp;market=US&quot;
+<span class="lineNum">     107 </span>            :   :items    =&gt; JSON3.Object[{…
+<span class="lineNum">     108 </span>            :   :limit    =&gt; 20
+<span class="lineNum">     109 </span>            : ```
+<span class="lineNum">     110 </span>            : &quot;&quot;&quot;
+<span class="lineNum">     111 </span>            : function album_get_saved(;limit::Int64=20, market::String=&quot;US&quot;, offset::Int64=0)
+<span class="lineNum">     112 </span>            :     
+<span class="lineNum">     113 </span><span class="lineCov">          4 :     return spotify_request(&quot;me/albums?limit=$limit&amp;market=$market&amp;offset=$offset&quot;; </span>
+<span class="lineNum">     114 </span>            :     scope = &quot;user-library-read&quot;)
+<span class="lineNum">     115 </span>            : 
+<span class="lineNum">     116 </span>            : end
+<span class="lineNum">     117 </span>            : 
+<span class="lineNum">     118 </span>            : 
+<span class="lineNum">     119 </span>            : ## https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-albums
+<span class="lineNum">     120 </span>            : 
+<span class="lineNum">     121 </span>            : &quot;&quot;&quot;
+<span class="lineNum">     122 </span>            :     album_get_contains(ids)
+<span class="lineNum">     123 </span>            : 
+<span class="lineNum">     124 </span>            : **Summary**: Check if one or more albums is already saved in the current Spotify user's 'Your Music' library.
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span>            : # Arguments
+<span class="lineNum">     127 </span>            : - `ids` : A comma-separated list of the Spotify album IDs
+<span class="lineNum">     128 </span>            : 
+<span class="lineNum">     129 </span>            : # Example
+<span class="lineNum">     130 </span>            : ```julia-repl
+<span class="lineNum">     131 </span>            : julia&gt; Spotify.album_get_contains(&quot;382ObEPsp2rxGrnsizN5TX,1A2GTWGtFfWp7KSQTwWOyo&quot;)[1]
+<span class="lineNum">     132 </span>            : [ Info: We try the request without checking if current grant includes scope user-library-read.
+<span class="lineNum">     133 </span>            : 2-element JSON3.Array{Bool, Base.CodeUnits{UInt8, String}, Vector{UInt64}}:
+<span class="lineNum">     134 </span>            :  0
+<span class="lineNum">     135 </span>            :  0
+<span class="lineNum">     136 </span>            : ```
+<span class="lineNum">     137 </span>            : &quot;&quot;&quot;
+<span class="lineNum">     138 </span>            : function album_get_contains(ids)
+<span class="lineNum">     139 </span><span class="lineCov">          1 :     return spotify_request(&quot;me/albums/contains?ids=$ids&quot;; scope = &quot;user-library-read&quot;)</span>
+<span class="lineNum">     140 </span>            : end 
 </pre>
       </td>
     </tr>
