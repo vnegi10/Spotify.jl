@@ -31,13 +31,13 @@
             <td class="headerValue">on branch master</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">3</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-11-20 21:17:15</td>
+            <td class="headerValue">2021-11-22 00:23:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -60,22 +60,115 @@
       <td>
 <pre class="sourceHeading">          Line data    Source code</pre>
 <pre class="source">
-<a name="1"><span class="lineNum">       1 </span>            : # episodes.jl</a>
-<span class="lineNum">       2 </span>            : ## https://developer.spotify.com/documentation/web-api/reference/episodes/
-<span class="lineNum">       3 </span>            : 
-<span class="lineNum">       4 </span>            : ## https://developer.spotify.com/documentation/web-api/reference/episodes/get-an-episode/
-<span class="lineNum">       5 </span>            : @doc &quot;&quot;&quot;
-<span class="lineNum">       6 </span>            : # Get an Episode
-<span class="lineNum">       7 </span>            : **Summary**: Get Spotify catalog information for a single peisode identified by it's unique Spotify ID.\n 
-<span class="lineNum">       8 </span>            : 
-<span class="lineNum">       9 </span>            : `episode_id` _Required_: The Spotify ID for the episode_id. Up to 50 episodes can be passed, comma delimited.\n
-<span class="lineNum">      10 </span>            : `market` _Optional_: An ISO 3166-1 alpha 2 country code.
-<span class="lineNum">      11 </span>            : 
-<span class="lineNum">      12 </span>            : [Reference](https://developer.spotify.com/documentation/web-api/reference/episodes/get-an-episode/)
-<span class="lineNum">      13 </span><span class="lineNoCov">          0 : &quot;&quot;&quot; -&gt;</span>
-<span class="lineNum">      14 </span><span class="lineNoCov">          0 : function episodes_get(episode_id, market=&quot;US&quot;)</span>
-<span class="lineNum">      15 </span><span class="lineNoCov">          0 :     return spotify_request(&quot;episodes/$episode_id?market=$market&quot;)</span>
-<span class="lineNum">      16 </span>            : end
+<a name="1"><span class="lineNum">       1 </span>            : ## https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-episode</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : &quot;&quot;&quot;
+<span class="lineNum">       4 </span>            :     episodes_get_single(episode_id; market=&quot;US&quot;)
+<span class="lineNum">       5 </span>            : 
+<span class="lineNum">       6 </span>            : **Summary**: Get Spotify catalog information for a single episode identified by its unique Spotify ID.
+<span class="lineNum">       7 </span>            : 
+<span class="lineNum">       8 </span>            : # Arguments
+<span class="lineNum">       9 </span>            : - `episode_id` : The Spotify ID for the episode_id
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : # Optional keywords
+<span class="lineNum">      12 </span>            : - `market` : An ISO 3166-1 alpha-2 country code. Default is set to &quot;US&quot;.
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : # Example
+<span class="lineNum">      15 </span>            : ```julia-repl
+<span class="lineNum">      16 </span>            : julia&gt; Spotify.episodes_get_single(&quot;512ojhOuo1ktJprKbVcKyQ&quot;)[1]
+<span class="lineNum">      17 </span>            : JSON3.Object{Base.CodeUnits{UInt8, String}, Vector{UInt64}} with 19 entries:
+<span class="lineNum">      18 </span>            :   :audio_preview_url    =&gt; &quot;https://p.scdn.co/mp3-preview/566fcc94708f39bcddc09e4ce84a8e5db8f07d4d&quot;
+<span class="lineNum">      19 </span>            :   :description          =&gt; &quot;En ny tysk bok granskar för första gången Tredje rikets drogberoende, från Führerns k…
+<span class="lineNum">      20 </span>            :   :duration_ms          =&gt; 1502795
+<span class="lineNum">      21 </span>            :   :explicit             =&gt; false
+<span class="lineNum">      22 </span>            :   :external_urls        =&gt; {…
+<span class="lineNum">      23 </span>            : ```
+<span class="lineNum">      24 </span>            : &quot;&quot;&quot;
+<span class="lineNum">      25 </span>            : function episodes_get_single(episode_id; market=&quot;US&quot;)
+<span class="lineNum">      26 </span><span class="lineCov">          6 :     return spotify_request(&quot;episodes/$episode_id?market=$market&quot;)</span>
+<span class="lineNum">      27 </span>            : end
+<span class="lineNum">      28 </span>            : 
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : ## https://developer.spotify.com/documentation/web-api/reference/#/operations/get-multiple-episodes
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span>            : &quot;&quot;&quot;
+<span class="lineNum">      33 </span>            :     episodes_get_multiple(episode_ids; market=&quot;US&quot;)
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : **Summary**: Get Spotify catalog information for several episodes based on their Spotify IDs.
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : # Arguments
+<span class="lineNum">      38 </span>            : - `episode_ids` : A comma-separated list of the Spotify IDs for the episodes. Maximum: 50 IDs.
+<span class="lineNum">      39 </span>            : 
+<span class="lineNum">      40 </span>            : # Optional keywords
+<span class="lineNum">      41 </span>            : - `market` : An ISO 3166-1 alpha-2 country code. Default is set to &quot;US&quot;.
+<span class="lineNum">      42 </span>            : 
+<span class="lineNum">      43 </span>            : # Example
+<span class="lineNum">      44 </span>            : ```julia-repl
+<span class="lineNum">      45 </span>            : julia&gt; Spotify.episodes_get_multiple(&quot;77o6BIVlYM3msb4MMIL1jH,0Q86acNRm6V9GYx55SXKwf&quot;)[1]
+<span class="lineNum">      46 </span>            : JSON3.Object{Base.CodeUnits{UInt8, String}, Vector{UInt64}} with 1 entry:
+<span class="lineNum">      47 </span>            :   :episodes =&gt; JSON3.Object[{…
+<span class="lineNum">      48 </span>            : ```
+<span class="lineNum">      49 </span>            : &quot;&quot;&quot;
+<span class="lineNum">      50 </span>            : function episodes_get_multiple(episode_ids; market=&quot;US&quot;)
+<span class="lineNum">      51 </span><span class="lineCov">          6 :     return spotify_request(&quot;episodes?ids=$episode_ids&amp;market=$market&quot;)</span>
+<span class="lineNum">      52 </span>            : end
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span>            : ## https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-saved-episodes
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : &quot;&quot;&quot;
+<span class="lineNum">      58 </span>            :     episodes_get_saved(;limit::Int64=20, market::String=&quot;US&quot;, offset::Int64=0)
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            : **Summary**: Get a list of the episodes saved in the current Spotify user's library.
+<span class="lineNum">      61 </span>            :              This API endpoint is in **beta** and could change without warning.
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span>            : # Optional keywords
+<span class="lineNum">      64 </span>            : - `limit::Int64` : Maximum number of items to return, default is set to 20
+<span class="lineNum">      65 </span>            : - `market::String` : An ISO 3166-1 alpha-2 country code. If a country code is specified, 
+<span class="lineNum">      66 </span>            :                      only episodes that are available in that market will be returned. 
+<span class="lineNum">      67 </span>            :                      Default is set to &quot;US&quot;.
+<span class="lineNum">      68 </span>            : - `offset::Int64` : Index of the first item to return, default is set to 0
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            : # Example
+<span class="lineNum">      71 </span>            : ```julia-repl
+<span class="lineNum">      72 </span>            : julia&gt; Spotify.episodes_get_saved()[1]
+<span class="lineNum">      73 </span>            : [ Info: We try the request without checking if current grant includes scope user-library-read.
+<span class="lineNum">      74 </span>            : JSON3.Object{Base.CodeUnits{UInt8, String}, Vector{UInt64}} with 7 entries:
+<span class="lineNum">      75 </span>            :   :href     =&gt; &quot;https://api.spotify.com/v1/me/episodes?offset=0&amp;limit=20&amp;market=US&quot;
+<span class="lineNum">      76 </span>            :   :items    =&gt; Union{}[]
+<span class="lineNum">      77 </span>            :   :limit    =&gt; 20
+<span class="lineNum">      78 </span>            : &quot;&quot;&quot;
+<span class="lineNum">      79 </span>            : function episodes_get_saved(;limit::Int64=20, market::String=&quot;US&quot;, offset::Int64=0)
+<span class="lineNum">      80 </span>            : 
+<span class="lineNum">      81 </span><span class="lineCov">         10 :     return spotify_request(&quot;me/episodes?limit=$limit&amp;market=$market&amp;offset=$offset&quot;; </span>
+<span class="lineNum">      82 </span>            :     scope = &quot;user-library-read&quot;)
+<span class="lineNum">      83 </span>            : 
+<span class="lineNum">      84 </span>            : end
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            : 
+<span class="lineNum">      87 </span>            : ## https://developer.spotify.com/documentation/web-api/reference/#/operations/check-users-saved-episodes
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span>            : &quot;&quot;&quot;
+<span class="lineNum">      90 </span>            :     episodes_get_contains(ids)
+<span class="lineNum">      91 </span>            : 
+<span class="lineNum">      92 </span>            : **Summary**: Check if one or more episodes is already saved in the current Spotify user's 'Your Episodes' library.
+<span class="lineNum">      93 </span>            :              This API endpoint is in **beta** and could change without warning.
+<span class="lineNum">      94 </span>            : 
+<span class="lineNum">      95 </span>            : # Arguments
+<span class="lineNum">      96 </span>            : - `ids` : A comma-separated list of the Spotify episode IDs
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span>            : # Example
+<span class="lineNum">      99 </span>            : ```julia-repl
+<span class="lineNum">     100 </span>            : julia&gt; Spotify.episodes_get_contains(&quot;77o6BIVlYM3msb4MMIL1jH,0Q86acNRm6V9GYx55SXKwf&quot;)[1]
+<span class="lineNum">     101 </span>            : [ Info: We try the request without checking if current grant includes scope user-library-read.
+<span class="lineNum">     102 </span>            : 2-element JSON3.Array{Bool, Base.CodeUnits{UInt8, String}, Vector{UInt64}}:
+<span class="lineNum">     103 </span>            :  0
+<span class="lineNum">     104 </span>            :  0
+<span class="lineNum">     105 </span>            : ```
+<span class="lineNum">     106 </span>            : &quot;&quot;&quot;
+<span class="lineNum">     107 </span>            : function episodes_get_contains(ids)
+<span class="lineNum">     108 </span><span class="lineCov">          1 :     return spotify_request(&quot;me/episodes/contains?ids=$ids&quot;; scope = &quot;user-library-read&quot;)</span>
+<span class="lineNum">     109 </span>            : end 
 </pre>
       </td>
     </tr>

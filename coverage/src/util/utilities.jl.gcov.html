@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-11-20 21:17:15</td>
+            <td class="headerValue">2021-11-22 00:23:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -68,27 +68,27 @@
 <span class="lineNum">       6 </span>            :     )
 <span class="lineNum">       7 </span>            : end
 <span class="lineNum">       8 </span>            : 
-<span class="lineNum">       9 </span><span class="lineCov">         99 : function header_maker(;scope=&quot;client-credentials&quot;)</span>
-<span class="lineNum">      10 </span><span class="lineCov">        198 :     if scope == &quot;client-credentials&quot;</span>
-<span class="lineNum">      11 </span><span class="lineCov">         78 :         if client_credentials_still_valid()</span>
-<span class="lineNum">      12 </span><span class="lineCov">         78 :             return [&quot;Authorization&quot; =&gt; &quot;Bearer $(spotcred().access_token)&quot;]</span>
+<span class="lineNum">       9 </span><span class="lineCov">        114 : function header_maker(;scope=&quot;client-credentials&quot;)</span>
+<span class="lineNum">      10 </span><span class="lineCov">        228 :     if scope == &quot;client-credentials&quot;</span>
+<span class="lineNum">      11 </span><span class="lineCov">         84 :         if client_credentials_still_valid()</span>
+<span class="lineNum">      12 </span><span class="lineCov">         84 :             return [&quot;Authorization&quot; =&gt; &quot;Bearer $(spotcred().access_token)&quot;]</span>
 <span class="lineNum">      13 </span>            :         else
 <span class="lineNum">      14 </span><span class="lineNoCov">          0 :             @warn &quot;Client credentials expired at $(spotcred().expires_at)&quot;</span>
 <span class="lineNum">      15 </span>            :         end
-<span class="lineNum">      16 </span><span class="lineCov">         21 :     elseif has_valid_bearer(scope)</span>
-<span class="lineNum">      17 </span><span class="lineCov">         20 :         return [&quot;Authorization&quot; =&gt; &quot;Bearer $(spotcred().ig_access_token)&quot;]</span>
+<span class="lineNum">      16 </span><span class="lineCov">         30 :     elseif has_valid_bearer(scope)</span>
+<span class="lineNum">      17 </span><span class="lineCov">         29 :         return [&quot;Authorization&quot; =&gt; &quot;Bearer $(spotcred().ig_access_token)&quot;]</span>
 <span class="lineNum">      18 </span>            :     else
 <span class="lineNum">      19 </span><span class="lineCov">          1 :         @warn &quot;Current scope not valid, exiting call: $scope&quot;</span>
 <span class="lineNum">      20 </span>            :     end
 <span class="lineNum">      21 </span>            : end
 <span class="lineNum">      22 </span>            : 
-<span class="lineNum">      23 </span><span class="lineCov">         21 : function has_valid_bearer(scope)</span>
-<span class="lineNum">      24 </span><span class="lineCov">         21 :     if scope == &quot;user access token&quot;</span>
+<span class="lineNum">      23 </span><span class="lineCov">         30 : function has_valid_bearer(scope)</span>
+<span class="lineNum">      24 </span><span class="lineCov">         30 :     if scope == &quot;user access token&quot;</span>
 <span class="lineNum">      25 </span>            :         # No check if it has expired yet.
 <span class="lineNum">      26 </span><span class="lineNoCov">          0 :         spotcred().access_token != &quot;&quot;</span>
-<span class="lineNum">      27 </span><span class="lineCov">         21 :     elseif has_ig_access_token()</span>
-<span class="lineNum">      28 </span><span class="lineCov">         20 :         @info &quot;We try the request without checking if current grant includes scope $scope.&quot; maxlog = 3</span>
-<span class="lineNum">      29 </span><span class="lineCov">         20 :         true</span>
+<span class="lineNum">      27 </span><span class="lineCov">         30 :     elseif has_ig_access_token()</span>
+<span class="lineNum">      28 </span><span class="lineCov">         29 :         @info &quot;We try the request without checking if current grant includes scope $scope.&quot; maxlog = 3</span>
+<span class="lineNum">      29 </span><span class="lineCov">         29 :         true</span>
 <span class="lineNum">      30 </span>            :     else
 <span class="lineNum">      31 </span><span class="lineCov">          1 :         @info &quot;Starting asyncronous user authorization process. Try again later!&quot;</span>
 <span class="lineNum">      32 </span><span class="lineCov">          1 :         get_implicit_grant()</span>

@@ -31,13 +31,13 @@
             <td class="headerValue">on branch master</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">20</td>
+            <td class="headerCovTableEntry">22</td>
             <td class="headerCovTableEntry">31</td>
-            <td class="headerCovTableEntryLo">64.5 %</td>
+            <td class="headerCovTableEntryLo">71.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-11-20 21:17:15</td>
+            <td class="headerValue">2021-11-22 00:23:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -73,29 +73,29 @@
 <span class="lineNum">      11 </span>            : Errors are written to 'stderr', expect for 'API rate limit exceeded', as 
 <span class="lineNum">      12 </span>            : the output would typically occur in the middle of recursive calls.
 <span class="lineNum">      13 </span>            : &quot;&quot;&quot;
-<span class="lineNum">      14 </span><span class="lineCov">         99 : function spotify_request(url_ext::String, method::String= &quot;GET&quot;; scope = &quot;client-credentials&quot;)</span>
+<span class="lineNum">      14 </span><span class="lineCov">        114 : function spotify_request(url_ext::String, method::String= &quot;GET&quot;; scope = &quot;client-credentials&quot;)</span>
 <span class="lineNum">      15 </span>            :     # Not so cool, but this is how we get rid of spaces in vectors of strings:
-<span class="lineNum">      16 </span><span class="lineCov">        297 :     url_ext = replace(url_ext, ' ' =&gt; &quot;&quot;)</span>
-<span class="lineNum">      17 </span><span class="lineCov">         99 :     url = &quot;https://api.spotify.com/v1/$url_ext&quot;</span>
-<span class="lineNum">      18 </span><span class="lineCov">         99 :     headers = header_maker(;scope)</span>
-<span class="lineNum">      19 </span><span class="lineCov">        197 :     isnothing(headers) &amp;&amp; return()</span>
-<span class="lineNum">      20 </span><span class="lineCov">         98 :     resp = HTTP.Messages.Response()</span>
-<span class="lineNum">      21 </span><span class="lineCov">         98 :     try</span>
-<span class="lineNum">      22 </span><span class="lineCov">        196 :         resp = HTTP.request(method, url, headers)</span>
+<span class="lineNum">      16 </span><span class="lineCov">        342 :     url_ext = replace(url_ext, ' ' =&gt; &quot;&quot;)</span>
+<span class="lineNum">      17 </span><span class="lineCov">        114 :     url = &quot;https://api.spotify.com/v1/$url_ext&quot;</span>
+<span class="lineNum">      18 </span><span class="lineCov">        114 :     headers = header_maker(;scope)</span>
+<span class="lineNum">      19 </span><span class="lineCov">        227 :     isnothing(headers) &amp;&amp; return()</span>
+<span class="lineNum">      20 </span><span class="lineCov">        113 :     resp = HTTP.Messages.Response()</span>
+<span class="lineNum">      21 </span><span class="lineCov">        113 :     try</span>
+<span class="lineNum">      22 </span><span class="lineCov">        226 :         resp = HTTP.request(method, url, headers)</span>
 <span class="lineNum">      23 </span>            :     catch e
-<span class="lineNum">      24 </span><span class="lineCov">          5 :         if  e isa HTTP.ExceptionRequest.StatusError &amp;&amp; e.status ∈ [400, 401, 403, 404, 429]</span>
-<span class="lineNum">      25 </span><span class="lineCov">          2 :             response_body = e.response.body |&gt; String</span>
-<span class="lineNum">      26 </span><span class="lineCov">          2 :             if e.status == 429 # API rate limit temporarily exceeded.</span>
+<span class="lineNum">      24 </span><span class="lineCov">         14 :         if  e isa HTTP.ExceptionRequest.StatusError &amp;&amp; e.status ∈ [400, 401, 403, 404, 429]</span>
+<span class="lineNum">      25 </span><span class="lineCov">          5 :             response_body = e.response.body |&gt; String</span>
+<span class="lineNum">      26 </span><span class="lineCov">          5 :             if e.status == 429 # API rate limit temporarily exceeded.</span>
 <span class="lineNum">      27 </span><span class="lineNoCov">          0 :                 retry_in_seconds =  HTTP.header(e.response, &quot;retry-after&quot;) </span>
 <span class="lineNum">      28 </span><span class="lineNoCov">          0 :                 return JSON3.Object(), parse(Int, retry_in_seconds)</span>
 <span class="lineNum">      29 </span>            : 
-<span class="lineNum">      30 </span><span class="lineCov">          2 :             elseif e.status == 404 # Not found, e.g. when a track/playlist/album ID is incorrect</span>
+<span class="lineNum">      30 </span><span class="lineCov">          5 :             elseif e.status == 404 # Not found, e.g. when a track/playlist/album ID is incorrect</span>
 <span class="lineNum">      31 </span><span class="lineCov">          1 :                 @info &quot;404 Not Found - Check if input arguments are okay&quot;</span>
 <span class="lineNum">      32 </span><span class="lineCov">          1 :                 return JSON3.Object(), 0</span>
 <span class="lineNum">      33 </span>            : 
-<span class="lineNum">      34 </span><span class="lineCov">          1 :             elseif e.status == 403 </span>
-<span class="lineNum">      35 </span><span class="lineNoCov">          0 :                 @info &quot;403 - Bad OAuth request (wrong consumer key, bad nonce, expired timestamp...)&quot;</span>
-<span class="lineNum">      36 </span><span class="lineNoCov">          0 :                 return JSON3.Object(), 0</span>
+<span class="lineNum">      34 </span><span class="lineCov">          4 :             elseif e.status == 403 </span>
+<span class="lineNum">      35 </span><span class="lineCov">          3 :                 @info &quot;403 - Bad OAuth request (wrong consumer key, bad nonce, expired timestamp...)&quot;</span>
+<span class="lineNum">      36 </span><span class="lineCov">          3 :                 return JSON3.Object(), 0</span>
 <span class="lineNum">      37 </span>            : 
 <span class="lineNum">      38 </span><span class="lineCov">          1 :             elseif e.status == 400 # e.g. when a search query is empty</span>
 <span class="lineNum">      39 </span><span class="lineCov">          1 :                 @info &quot;Check if the search query is present&quot;</span>
@@ -113,8 +113,8 @@
 <span class="lineNum">      51 </span><span class="lineNoCov">          0 :             return JSON3.Object(), 0</span>
 <span class="lineNum">      52 </span>            :         end
 <span class="lineNum">      53 </span>            :     end
-<span class="lineNum">      54 </span><span class="lineCov">         96 :     response_body = resp.body |&gt; String</span>
-<span class="lineNum">      55 </span><span class="lineCov">         96 :     response_body |&gt; JSON3.read , 0</span>
+<span class="lineNum">      54 </span><span class="lineCov">        108 :     response_body = resp.body |&gt; String</span>
+<span class="lineNum">      55 </span><span class="lineCov">        108 :     response_body |&gt; JSON3.read , 0</span>
 <span class="lineNum">      56 </span>            : end
 <span class="lineNum">      57 </span>            : 
 <span class="lineNum">      58 </span>            : #=

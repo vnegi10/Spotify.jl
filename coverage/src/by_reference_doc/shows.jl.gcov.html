@@ -31,13 +31,13 @@
             <td class="headerValue">on branch master</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">4</td>
-            <td class="headerCovTableEntry">6</td>
-            <td class="headerCovTableEntryLo">66.7 %</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-11-20 21:17:15</td>
+            <td class="headerValue">2021-11-22 00:23:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -185,8 +185,8 @@
 <span class="lineNum">     123 </span>            : # Arguments
 <span class="lineNum">     124 </span>            : - `ids` : A comma-separated list of the Spotify IDs for the shows. Maximum: 50 IDs.
 <span class="lineNum">     125 </span>            : &quot;&quot;&quot;
-<span class="lineNum">     126 </span><span class="lineNoCov">          0 : function show_get_contains(ids)</span>
-<span class="lineNum">     127 </span><span class="lineNoCov">          0 :     return spotify_request(&quot;me/shows/contains?ids=$ids&quot;; scope = &quot;user-library-read&quot;)</span>
+<span class="lineNum">     126 </span>            : function show_get_contains(ids)
+<span class="lineNum">     127 </span><span class="lineCov">          1 :     return spotify_request(&quot;me/shows/contains?ids=$ids&quot;; scope = &quot;user-library-read&quot;)</span>
 <span class="lineNum">     128 </span>            : end
 </pre>
       </td>
